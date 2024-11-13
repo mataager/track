@@ -1,0 +1,261 @@
+<head>
+    <meta charset="UTF-8">
+    <style data-styles="">
+        ion-icon {
+            visibility: hidden
+        }
+
+        .hydrated {
+            visibility: inherit
+        }
+    </style>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title id="store-title"></title>
+
+    <!-- 
+    - favicon
+  -->
+    <link rel="shortcut icon" href="./favicon.svg" type="image/svg+xml">
+
+    <!-- 
+    - custom css link
+  -->
+    <link rel="stylesheet" href="./assets/css/style.css">
+
+    <!-- 
+    - google font link
+  -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@300;400;500;600;700&amp;family=Roboto:wght@400;500;700&amp;display=swap"
+        rel="stylesheet">
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <script src="./assets/js/static.js"></script>
+    <script src="./assets/js/search-product.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
+
+
+</head>
+<header class="header" data-header="">
+
+    <div class="header__bar">Free Shipping On Orders Over <div class="m-x-3" id="free-shipping"></div> EGP</div>
+    <div class="container">
+
+        <div class="overlay" data-overlay=""></div>
+
+        <a href="./index.html" class="logo">
+            <img src="./assets/images/iicon.svg" width="160" height="50" alt="">
+        </a>
+
+        <button class="nav-open-btn" data-nav-open-btn="" aria-label="Open Menu">
+            <ion-icon name="menu-outline" role="img" class="md hydrated" aria-label="menu outline"></ion-icon>
+        </button>
+
+        <nav class="navbar" data-navbar="">
+
+            <button class="nav-close-btn black-font" data-nav-close-btn="" aria-label="Close Menu">
+                <ion-icon name="close-outline" role="img" class="md hydrated" aria-label="close outline"></ion-icon>
+            </button>
+
+            <a href="#" class="logo bg-white">
+                <img src="./assets/images/iicon.svg" width="190" height="50" alt="">
+            </a>
+
+            <ul class="navbar-list">
+                <li class="navbar-item">
+                    <a href="#" class="navbar-link" onclick="changeFrameSrc('index.html')">Home</a>
+                </li>
+                <!-- <li class="navbar-item">
+                                        <a href="#" class="navbar-link" onclick="changeFrameSrc('About.html')">About</a>
+                                    </li> -->
+                <li class="navbar-item" id="megamenu" data-mega-menu>
+                    <div class="flex align-items justify-content-space-between">
+                        <a href="#" class="navbar-link" onclick="changeFrameSrc('Products.html')">Products</a>
+                        <a id="open-category" class="rotate open-category open-category-btn"><i
+                                class="bi bi-plus"></i></a>
+                    </div>
+                    <div class="mega-menu flex-direction-column" id="mega-menu">
+
+                    </div>
+                </li>
+                <script>
+                    document.addEventListener('DOMContentLoaded', () => {
+                        // Select the navbar item that contains the mega menu
+                        const navbarItem = document.getElementById('megamenu');
+                        const toggleIcon = document.getElementById('open-category');
+                        const categoryHeaders = document.querySelectorAll('.menu-category h4');
+
+                        // Toggle mega menu display on click for smaller screens
+                        toggleIcon.addEventListener('click', (e) => {
+                            e.stopPropagation(); // Prevent triggering other click events
+                            navbarItem.classList.toggle('active');
+
+                            // Toggle icon rotation and change icon class
+                            if (navbarItem.classList.contains('active')) {
+                                toggleIcon.classList.add('rotate-360');
+                                toggleIcon.classList.remove('rotate-back');
+                                toggleIcon.innerHTML = '<i class="bi bi-dash"></i>';
+                            } else {
+                                toggleIcon.classList.add('rotate-back');
+                                toggleIcon.classList.remove('rotate-360');
+                                toggleIcon.innerHTML = '<i class="bi bi-plus"></i>';
+                            }
+                        });
+
+                        // Add click event listeners to all category headers (h4)
+                        categoryHeaders.forEach(header => {
+                            header.addEventListener('click', (e) => {
+                                e.stopPropagation(); // Prevent click from closing the navbar
+                                const category = header.parentElement;
+                                category.classList.toggle('active');
+                            });
+                        });
+
+                        // Close mega menu when clicking outside
+                        document.addEventListener('click', (e) => {
+                            if (!navbarItem.contains(e.target)) {
+                                navbarItem.classList.remove('active');
+                                toggleIcon.classList.remove('rotate-360');
+                                toggleIcon.classList.add('rotate-back');
+                                toggleIcon.innerHTML = '<i class="bi bi-plus"></i>';
+                            }
+                        });
+                    });
+
+                </script>
+                <li class="navbar-item">
+                    <a href="#" class="navbar-link red-txt" onclick="changeFrameSrc('sale.html')">Sale</a>
+                </li>
+
+                <li class="navbar-item">
+                    <a href="#" class="navbar-link" onclick="changeFrameSrc('Contact.html')">Contact</a>
+                </li>
+            </ul>
+            <ul class="nav-action-list">
+
+                <li class="li-action" id="search-li">
+
+
+                </li>
+
+                <li class="navbar-item li-action">
+                    <button class="nav-action-btn" onclick="changeFrameSrc('Cart.html')">
+                        <ion-icon name="bag-outline" aria-hidden="true" role="img" class="md hydrated"></ion-icon>
+                        <data class="nav-action-text">Basket: <strong class="cart-amount" id="cart-amount">0
+                                E£</strong></data>
+                        <data id="cartItemCount" class="nav-action-badge" aria-hidden="true">0</data>
+                    </button>
+                </li>
+
+                <li class="navbar-item li-action">
+                    <button class="nav-action-btn" onclick="changeFrameSrc('account.html')">
+                        <ion-icon name="person-outline"></ion-icon>
+                        <span class="nav-action-text">Account</span>
+                    </button>
+                </li>
+                <li>
+                    <button class="nav-action-btn hidden">
+                        <ion-icon name="heart-outline" aria-hidden="true" role="img" class="md hydrated"></ion-icon>
+
+                        <span class="nav-action-text">Wishlist</span>
+
+                        <data class="nav-action-badge" value="5" aria-hidden="true">5</data>
+                    </button>
+                </li>
+            </ul>
+
+        </nav>
+
+    </div>
+</header>
+
+<body>
+    <div class="preloader" id="preloader">
+        <img src="favicon.png" alt="Your Image" width="40" height="40">
+        <div class="loader"></div>
+    </div>
+
+    <div class="flex flex-direction-column align-items m-50">
+        <div class="flex center width-available">
+            <h1>Account</h1>
+        </div>
+
+        <div class="mt-20">
+            <button id="google-signin-btn">
+                <div class="flex align-items google-signin-btn p-10">
+                    <i class="bi bi-google mr-5"></i>
+                    Sign in with Google
+                </div>
+            </button>
+        </div>
+        <div class="mt-20">
+            <button id="email-signin-btn" onclick="emailPasswordSignIn()">
+                <div class="flex align-items google-signin-btn p-10">
+                    <i class="bi bi-envelope-fill mr-5"></i> sign in with email & password
+                </div>
+            </button>
+        </div>
+
+        <div id="user-info" style="display: none;">
+            <div class="user-info flex flex-direction-column align-items">
+                <img id="user-photo" src="" alt="User Photo">
+                <div class="flex flex-direction-column align-items">
+                    <h4 id="user-name"></h4>
+                    <p id="user-email"></p>
+                </div>
+            </div>
+        </div>
+        <div>
+            <button class="signout-btn" id="signout-btn">
+                <div class="flex align-items"><ion-icon class="mr-5" name="log-out-outline"></ion-icon>Sign Out</div>
+            </button>
+        </div>
+
+    </div>
+    <div class="flex center">
+        <a href="https://matager.online" target="_blank">
+            <img src="./assets/images/powerd by matager black.svg" width="100px">
+        </a>
+    </div>
+</body>
+
+<a href="#top" class="go-top-btn" data-go-top="">
+    <ion-icon name="arrow-up-outline" role="img" class="md hydrated" aria-label="arrow up outline"></ion-icon>
+</a>
+<!-- 
+    - custom js link
+  -->
+
+
+<!-- //ionicon link -->
+
+<script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+<script nomodule="" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+<script>
+
+    const goTopBtn = document.querySelector("[data-go-top]");
+
+    window.addEventListener("scroll", function () {
+        if (window.scrollY >= 80) {
+
+            goTopBtn.classList.add("active");
+        } else {
+
+            goTopBtn.classList.remove("active");
+        }
+    });
+
+</script>
+<script src="./assets/js/google-auth.js"></script>
+<script src="./assets/js/email&password-signin.js"></script>
+<script src="./assets/js/update-cart-amont.js"></script>
+<script src="./assets/js/route.js"></script>
+<script src="./assets/js/all.js"></script>
+<script src="./assets/js/rendering-megamenu.js"></script>
+<script src="./assets/js/rendering-search.js"></script>
