@@ -15,5 +15,5 @@ const mentopurl = "https://i.imgur.com/TUh0Df2.jpeg";
 const menbottomurl = "https://i.imgur.com/wiXu14J.jpeg";
 const menfootwareurl = "https://i.imgur.com/iYJb64s.jpeg";
 
-const newarrivalurl = "https://i.imgur.com/hOnT0T3.jpeg";
-const saleurl = "https://i.imgur.com/KDHBL3F.jpeg";
+const newarrivalurl = "https://i.imgur.com/gMIuV3N.jpeg";
+const saleurl = "https://i.imgur.com/y4gVarF.jpeg";
